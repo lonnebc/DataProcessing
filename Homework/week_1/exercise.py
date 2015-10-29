@@ -24,12 +24,26 @@ def split_string(source, separators):
     positions of each of the separator characters.
     '''
     # PROVIDE YOUR IMPLEMENTATION HERE
-    for separator in separators:
-        if separator in source:
-                source=source.replace(separator, ' ')
-    return source
 
+    sep_list = len(separators)
+    source_list = len(source)
+    new_list = []
+    start = 0
 
+    for i in range(source_list):
+        for j in range(sep_list):
+            if separators[j] == source[i]:
+                given_word = source[start:i]
+                if len(given_word) > 0:
+                    new_list.append(given_word)
+                    given_word = ""
+                start = i+1
+
+    given_word = source[start:len(source)]
+    if given_word != "":
+        new_list.append(given_word)
+
+    return new_list
 
 if __name__ == '__main__':
     # You can try to run your implementation here, that will not affect the
