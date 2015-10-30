@@ -37,9 +37,8 @@ def extract_tvseries(dom):
                 tvseries.append(str(title[0]))
         for o in i.by_tag("div.user_rating"):
                 for p in o.by_tag("div.rating"):
-                    rank = p.by_tag("span.value")[0] # because rank is just only 1 output 
+                    rank = p.by_tag("span.value")[0] # because rank is just only 1 output
                     tvseries.append(str(rank[0]))
-                    print rank[0]
         for m in i.by_tag("td.title"):
             for k in m.by_tag("span.genre"):
                 for genre in k.by_tag("a"):
@@ -53,9 +52,9 @@ def extract_tvseries(dom):
                     actors += ", "
                 actors = actors [:-2]
                 tvseries.append(str(actors))
-            for runtime in m.by_tag("span.runtime"):
-                runtime = str(runtime[0])
-                time = runtime.split(" ")
+            runtime = m.by_tag("span.runtime")[0] # because runtime is just only 1 time
+            runtime = str(runtime[0])
+            time = runtime.split(" ")
             tvseries.append(int(time[0]))
         result.append(tvseries)
         tvseries = []
