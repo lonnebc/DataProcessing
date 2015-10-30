@@ -26,43 +26,46 @@ def extract_tvseries(dom):
     - Runtime (only a number!)
     '''
 
+    tvseries = []
+    result = []
 
     for i in dom.by_tag("tr.detailed")[:50]:
-        genres = str("")
-        actors = str("")
+        genres = ""
+        actors = ""
         for j in i.by_tag("td.title"):
             for title in j.by_tag("a")[:1]:
-                print title[0]
-        for rank in i.by_tag("td.number"):
-            print rank[0]
+                tvseries.append(str(title[0]))
+        for o in i.by_tag("div.user_rating"):
+                for p in o.by_tag("div.rating"):
+                    rank = p.by_tag("span.value")[0] # because rank is just only 1 output 
+                    tvseries.append(str(rank[0]))
+                    print rank[0]
         for m in i.by_tag("td.title"):
             for k in m.by_tag("span.genre"):
                 for genre in k.by_tag("a"):
                     genres += str(genre[0])
                     genres += ", "
-                print genres
+                genres = genres [:-2]
+                tvseries.append(str(genre[0]))
             for n in m.by_tag("span.credit"):
                 for actor in n.by_tag("a"):
                     actors += str(actor[0])
                     actors += ", "
-                print actors
+                actors = actors [:-2]
+                tvseries.append(str(actors))
             for runtime in m.by_tag("span.runtime"):
-                    runtime = str(runtime[0])
-                    time = runtime.split(" ")
-                    print time[0]
-            print
-
-
-
-
+                runtime = str(runtime[0])
+                time = runtime.split(" ")
+            tvseries.append(int(time[0]))
+        result.append(tvseries)
+        tvseries = []
 
     # ADD YOUR CODE HERE TO EXTRACT THE ABOVE INFORMATION ABOUT THE
     # HIGHEST RANKING TV-SERIES
     # NOTE: FOR THIS EXERCISE YOU ARE ALLOWED (BUT NOT REQUIRED) TO IGNORE
     # UNICODE CHARACTERS AND SIMPLY LEAVE THEM OUT OF THE OUTPUT.
 
-    return []  # replace this line as well as appropriate
-
+    return result  # replace this line as well as appropriate
 
 def save_csv(f, tvseries):
     '''
@@ -71,8 +74,8 @@ def save_csv(f, tvseries):
     writer = csv.writer(f)
     writer.writerow(['Title', 'Ranking', 'Genre', 'Actors', 'Runtime'])
 
-
-
+    for row in tvseries:
+        writer.writerow(row)
 
     # ADD SOME CODE OF YOURSELF HERE TO WRITE THE TV-SERIES TO DISK
 
