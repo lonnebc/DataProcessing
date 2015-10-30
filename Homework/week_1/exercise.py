@@ -23,13 +23,13 @@ def split_string(source, separators):
     The ouput of this function should be a list of strings split at the
     positions of each of the separator characters.
     '''
-    # PROVIDE YOUR IMPLEMENTATION HERE
-
+    # make lists
     sep_list = len(separators)
     source_list = len(source)
     new_list = []
     start = 0
 
+    # append word in new_list
     for i in range(source_list):
         for j in range(sep_list):
             if separators[j] == source[i]:
