@@ -252,8 +252,8 @@ function createTransform(domain, range){
 }
 
 // to use this for instance:
-var transform = createTransform([1000, 2000], [300, 800]);
-console.log(transform(1250)); //should return 15!!
+var transform = createTransform([10, 20], [10, 20]);
+console.log(transform(15)); //should return 15!!
 
 
 // Make sure to test your createTransform function thouroughly
