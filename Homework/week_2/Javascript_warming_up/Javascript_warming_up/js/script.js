@@ -1,3 +1,4 @@
+// Lonneke Lammers - 10371672
 // Javascript warm-up exercises
 //
 // Pro-tip: just like any other programming exercise, tackle each
@@ -28,9 +29,14 @@ var ApplePie = {
 
 // TODO: add code here
 
-	p = document.getElementById("header").getElementsByTagName('p')
-	
+	p = document.getElementById("header").getElementsByTagName('p');
+	ApplePie.creator = p[0].textContent
+	console.log(p[0])
 
+	lijst = document.getElementById("ingredient-list").getElementsByTagName('li');
+	for (i = 0; i < 7; i++){
+		ApplePie.ingredients.push(lijst[i].textContent)}
+	console.log(ApplePie)
 
 // Exercise 2:
 // ----------- console.logging and iterating over an array ---------
@@ -46,12 +52,12 @@ var ApplePie = {
 
 // Uncomment by removing /* and */ and finish this for-loop.
 // Notice that the for-loop is still missing its condition:
-/*
-for (var i = 0; ; i++) {
+
+for (var i = 0; n = ApplePie.ingredients.length, i < n; i++) {
 	// TODO: add a console.log statement, printing out the element
 	// in the ingredients array at index i
+console.log(ApplePie.ingredients[i])
 };
-*/
 
 // Introduction to function callbacks:
 // ------------- function callbacks using a for each loop -----------
@@ -68,11 +74,11 @@ for (var i = 0; ; i++) {
 // A good example is the forEach loop in javascript
 // Uncomment the following lines to use the forEach loop
 // on your ingredient-list.
-/*
+
 ApplePie.ingredients.forEach(function (element, index){
 	console.log('a[' + index + '] ' + element);
 });
-*/
+
 
 // Notice that .forEach is a property of an array since it
 // can be called upon using a dot (just like "ingredients" is a property
@@ -85,7 +91,6 @@ ApplePie.ingredients.forEach(function (element, index){
 
 // The idea of passing a function to another function becomes even more
 // clear if we first declare the function. Like so:
-
 /*
 function log(element, index) {
 	console.log('a[' + index + '] ' + element);
@@ -93,6 +98,10 @@ function log(element, index) {
 
 ApplePie.ingredients.forEach(log);
 */
+
+document.querySelector(".pie").addEventListener("click", function() {
+	console.log("ApplePie img");
+});
 
 // Exercise 3:
 // ------ Changing html elements and using function callbacks ------
@@ -128,7 +137,7 @@ ApplePie.ingredients.forEach(log);
 // to return functions inside functions.
 
 // A good example is the following example:
-/*
+
 function Create_printfunction(input) {
 	var message = 'Thank you for the recipe, ' + input.creator
 	return function(another_message){
@@ -138,7 +147,7 @@ function Create_printfunction(input) {
 
 var print_function = Create_printfunction(ApplePie);
 print_function(' and thank you cs50 for our programming skills!')
-*/
+
 
 // The function Create_printfunction has a return statement. However, it does
 // not simply return a value like we are used to, but it returns a function.
@@ -227,13 +236,15 @@ print_function(' and thank you cs50 for our programming skills!')
 // for both the scaling factor alpha, and the padding beta.
 // The advantage of this function is that, because it is generic, it can be applied to any domain and range.
 // Therefor you can call it for any axis that you create and you neither have to make calculations by hand nor hardcode any values.
-/*
+
 function createTransform(domain, range){
 	// domain is a two-element array of the domain's bounds
 	// range is a two-element array of the range's bounds
 	// implement the actual calculation here
-	var beta = ...;
-	var alpha = ...;
+	var beta = range[0];
+	var alpha = (range[1] - range[0]) / (domain[1] + domain[0]);
+	console.log(beta)
+	console.log(alpha)
 
 	return function(x){
 		return alpha * x + beta;
@@ -241,9 +252,9 @@ function createTransform(domain, range){
 }
 
 // to use this for instance:
-var transform = createTransform([10, 20], [10, 20]);
-console.log(transform(15)); //should return 15!!
-*/
+var transform = createTransform([1000, 2000], [300, 800]);
+console.log(transform(1250)); //should return 15!!
+
 
 // Make sure to test your createTransform function thouroughly
 // and to become familiar with how it actually works, because
