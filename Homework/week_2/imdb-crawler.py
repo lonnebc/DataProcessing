@@ -261,8 +261,13 @@ def scrape_movie_page(dom):
         genres += "; "
     genres = genres[:-2]
     # get director
-    director = dom.by_attr(itemprop="director")[0]
-    directors = director.by_attr(itemprop="name")[0].content
+    directors = str("")
+    drct = dom.by_attr(itemprop="director")[0]
+    for director in drct.by_attr(itemprop="name"):
+        directors += director.content
+        directors += "; "
+    #director = dom.by_attr(itemprop="director")[0]
+    #directors = director.by_attr(itemprop="name")[0].content
     # get writer
     writer = dom.by_attr(itemprop="creator")[0]
     writers = writer.by_attr(itemprop="name")[0].content

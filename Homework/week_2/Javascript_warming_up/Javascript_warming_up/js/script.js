@@ -29,7 +29,7 @@ var ApplePie = {
 // TODO: add code here
 
 	p = document.getElementById("header").getElementsByTagName('p')
-
+	
 
 
 // Exercise 2:
