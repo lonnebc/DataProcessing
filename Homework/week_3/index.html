@@ -1,5 +1,4 @@
 <html>
-
 <head>
     <meta charset="utf-8"/>
     <script type="application/javascript">
@@ -8,12 +7,9 @@
         
         function transformData(domain, range){
         // domain is a two-element array of the domain's bounds
-        // range is a two-element array of the range's bounds
-        // implement the actual calculation here
-    
+        // range is a two-element array of the range's bounds    
             var alpha = (range[1] - range[0]) / (domain[1] - domain[0]);
             var beta = range[0] - (alpha * domain[0])
-            //padding b = range[0] - a*domain[0] scaling factor
 
             return function(x){
                 return alpha * x + beta;
@@ -23,6 +19,7 @@
         x_transform = transformData([0, 365], [40, 650]);
         y_transform = transformData([0, 350], [450, 100]);
 
+        //
         function draw() {
             var canvas = document.getElementById("canvas");
             if (canvas.getContext) {
@@ -38,14 +35,14 @@
                 ctx.fillStyle = '#008080'
                 ctx.fillText("(maximum temperature on 19/07/2014, minimum temperature on 3/12/2014)", 25, 64);
 
-                // vertical y-axis of graph
+                // vertical y-axis of graph, temperature in celcius
                 ctx.beginPath();
                 ctx.lineWidth = 2.5;
                 ctx.moveTo(40, 100);
                 ctx.lineTo(40, 450);
                 ctx.stroke();
 
-                // horizontal x-axis of graph
+                // horizontal x-axis of graph, months
                 ctx.beginPath();
                 ctx.lineWidth = 2.5;
                 ctx.moveTo(40, 450);
@@ -60,21 +57,21 @@
                 ctx.font="12px arial"
                 ctx.fillText("CELCIUS", 25, 85);
 
-
-                // Make circel 
+                // make circel where highest temperature
                 ctx.beginPath();
                 ctx.arc(372, 120, 9, 0, 2 * Math.PI);
                 ctx.fillStyle = 'red'
                 ctx.fill();
                 ctx.stroke();
                 
-                // make circel  
+                // make circel where lowest temperature
                 ctx.beginPath();
                 ctx.arc(602, 440, 9, 0, 2 * Math.PI);
                 ctx.fillStyle = '#AFEEEE'
                 ctx.fill();
                 ctx.stroke();
     
+        // split data, dates and temperature
         splitdata();
         function splitdata() {
             var data = document.getElementById("rawdata").value
@@ -88,7 +85,6 @@
             }
         }
 
-
         // draw graph
         ctx.beginPath();
         for (var i = 0; i < date.length; i++){
@@ -98,7 +94,7 @@
         }
         ctx.stroke();
 
-
+        // array for months
         var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         
@@ -123,18 +119,11 @@
         ctx.stroke();
 
         }
-    }
-        
-        
-    
+    } 
     </script>
-
 <body onload="draw();">
    <canvas id="canvas" width="750" height="500"style="border:2px solid #40E0D0;"></canvas>
- 
 </head>
-
-
 <textarea id="rawdata">
 2014/01/01,99
 2014/01/02,103
@@ -502,8 +491,5 @@
 2014/12/30,65
 2014/12/31,76
 </textarea>
-
-
 </body>
-
 </html>
