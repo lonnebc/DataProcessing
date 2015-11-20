@@ -5,7 +5,10 @@
         date = []
         temp = []
         
-        function transformData(domain, range){
+        var padding = 40
+        var height = 450
+
+        function createTransform(domain, range){
         // domain is a two-element array of the domain's bounds
         // range is a two-element array of the range's bounds    
             var alpha = (range[1] - range[0]) / (domain[1] - domain[0]);
@@ -16,8 +19,8 @@
             };
         }
 
-        x_transform = transformData([0, 365], [40, 650]);
-        y_transform = transformData([0, 350], [450, 100]);
+        x_transform = createTransform([0, 365], [40, 650]);
+        y_transform = createTransform([0, 350], [450, 100]);
 
         //
         function draw() {
@@ -38,24 +41,24 @@
                 //  y-axis of graph, temperature in celcius
                 ctx.beginPath();
                 ctx.lineWidth = 2.5;
-                ctx.moveTo(40, 100);
-                ctx.lineTo(40, 450);
+                ctx.moveTo(padding, 100);
+                ctx.lineTo(padding, height);
                 ctx.stroke();
 
                 //  x-axis of graph, months
                 ctx.beginPath();
                 ctx.lineWidth = 2.5;
-                ctx.moveTo(40, 450);
-                ctx.lineTo(650, 450);
+                ctx.moveTo(padding, height);
+                ctx.lineTo(650, height);
                 ctx.stroke(); 
 
                 // text date 
-                ctx.font="12px arial"
-                ctx.fillText("MONTH", 680, 460);
+                ctx.font="11px arial"
+                ctx.fillText("MONTH", 670, 455);
 
                 // text degrees celcius 
-                ctx.font="12px arial"
-                ctx.fillText("CELCIUS", 25, 85);
+                ctx.font="11px arial"
+                ctx.fillText("CELCIUS", 17, 85);
 
                 // make circel where highest temperature
                 ctx.beginPath();
@@ -78,14 +81,13 @@
         data = JSON.parse(rawdata)
             // var lines = data.split('\n');
 
-        
+        // split dates and temperature
         for(i = 0;i < data.length;i++){
-        //     splitLines = lines[i].split(',')
-            dateT = data[i][0]
-            tempT = data[i][1]
+            datePart = data[i][0]
+            tempPart = data[i][1]
 
-            date.push(dateT)
-            temp.push(tempT)
+            date.push(datePart)
+            temp.push(tempPart)
             }
         
         // draw graph
@@ -104,24 +106,23 @@
         // draw lines and months on x-asis
         ctx.beginPath();
         for (i = 0; i < months.length; i++) {
-            ctx.moveTo(40 + (i * (610/11)), 460);
-            ctx.lineTo(40 + (i * (610/11)), 450);
+            ctx.moveTo(padding + (i * (610/12)), height + 10);
+            ctx.lineTo(padding + (i * (610/12)), height);
             ctx.font="11px arial"
             ctx.fillStyle = 'black'
-            ctx.fillText(months[i], 35 + (i * (610/11)), 476);
+            ctx.fillText(months[i], 55 + (i * (610/12)), 470);
         }       
         
-        // draw lines and nrs on y-axis
-        for (i = 1, m = 40; i < 10; i++, m -= 5){
+        // draw lines and degrees on y-axis
+        for (i = 1, m = 30; i < 8; i++, m -= 5){
+            ctx.moveTo((padding - 10), ((350/7) * i) + 100);
+            ctx.lineTo(padding, ((350/7) * i) + 100);
             ctx.font="12px arial"
             ctx.fillStyle = 'black'
-            ctx.fillText(m, 12, ((350/9) * i) + 103)
-            ctx.moveTo(30, ((350/9) * i) + 100);
-            ctx.lineTo(40, ((350/9) * i) + 100);
+            ctx.fillText(m, 12, ((350/7) * i) + 104)
         }
         ctx.stroke();
     }
-     
     </script>
 <body onload="draw();">
 <div class="wraper">   
@@ -133,43 +134,89 @@
         position: absolute;
         top: 0;
         left: 0;
-        }
-        .wrapper {
+    }
+    .wrapper {
         position: relative;
         width: 750px;
         height: 500px;
-        }
+    }
 
-        .wrapper canvas {
+    .wrapper canvas {
         position: absolute;
         top: 0;
         left: 0;
-        }
+    }
 </style>
 <script>
-    // mouse movements
-    function writeMessage(canvas2, message) {
-        var context = canvas2.getContext('2d');
-        context.clearRect(0, 0, canvas2.width, canvas2.height);
-        context.font = '18pt Calibri';
-        context.fillStyle = 'black';
-        context.fillText(message, 10, 25);
-    }
-    function getMousePos(canvas2, evt) {
-        var rect = canvas2.getBoundingClientRect();
-        return {
-            x: evt.clientX - rect.left,
-            y: evt.clientY - rect.top
-        };
-    }
-    var canvas2 = document.getElementById('canvas2');
-    var context = canvas2.getContext('2d');
 
-    canvas2.addEventListener('mousemove', function(evt) {
-        var mousePos = getMousePos(canvas, evt);
-        var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-        writeMessage(canvas2, message);
-    }, false);
+// cross-hair 
+var canvas2 = document.getElementById('canvas2');
+var ctx2 = canvas2.getContext('2d');
+ctx2.save();
+
+
+var width = 690
+mousemove = false;
+canvas2.addEventListener('mousemove', function(event){
+    x = event.clientX;
+    mousePos = getMousePos(canvas2, event);
+    console.log(mousePos)
+
+// mouse movements
+function getMousePos(canvas, event) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top   
+    }
+};
+    
+var reverse_x_transform = createTransform([padding, width-padding], [0, 365]);
+
+    if (x > width - padding){
+        x = width - padding;
+    }
+    else if (x < padding) {
+        x = padding
+    }
+    else {
+        ctx2.clearRect(0,0,750,500);
+
+        // vertical cross-hair
+        ctx2.beginPath();
+        ctx2.moveTo(x, 0);
+        ctx2.strokeStyle="#000000";
+        ctx2.lineTo(x, 500);
+        ctx2.stroke();
+
+        index = parseInt(reverse_x_transform(x));
+        
+        // horizontal cross-hair
+        ctx2.beginPath();
+        ctx2.moveTo(0, y_transform(data[index][1]));
+        ctx2.strokeStyle="#000000";
+        ctx2.lineTo(750, y_transform(data[index][1]));
+        ctx2.stroke();
+
+        // get tooltip after delay of 0.5 seconds
+        //setTimeout(updateTooltip, 500);
+    };
+});
+
+    
+    // }
+
+    // var canvas2 = document.getElementById('canvas2');
+    // var ctx = canvas2.getContext('2d');
+
+    // canvas2.addEventListener('mousemove', function(evt) {
+    //     mousePos = getMousePos(canvas2, evt);
+    //     console.log(mousePos)
+    //     //point = ((mousePos.x - padding) * width)
+    //     //dag = math.round ( * 365)
+
+    // });
+
 </script>
 
 </head>
