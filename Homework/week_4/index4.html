@@ -192,12 +192,14 @@ function getMousePos(canvas, event) {
 var reverse_x_transform = createTransform([padding, width-padding], [0, 365]);
         
 // tooltips date and temperature
+// tooltip for date
+// tooltip2 for temperature 
 function toolTip(x, y, index){
     tooltip = document.getElementById('date') 
     tooltip2 = document.getElementById('temp')
     tooltip.style.top = (y + 100) + 'px';
-    tooltip.style.left = (x + 18) + 'px';
-    tooltip2.style.top = (y - 7) + 'px';
+    tooltip.style.left = (x + 17) + 'px';
+    tooltip2.style.top = (y - 10) + 'px';
     tooltip2.style.left = (x + 140) + 'px';
     tooltip.innerHTML = date[index];
     tooltip2.innerHTML = temp[index]/10 + ' &degC';
