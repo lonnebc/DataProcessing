@@ -7,10 +7,9 @@ data = []
 
 for line in lines:
     splitted = line.split(',')
-    country_code = splitted[4]
-    rate = splitted[5].strip()
+    country_code = splitted[-2]
+    rate = splitted[-1].strip()
     data.append([country_code,rate]) 
+print data
 json_data = json.dumps(data)
 print json_data   
-
-

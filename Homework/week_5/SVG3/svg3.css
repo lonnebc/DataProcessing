@@ -116,43 +116,20 @@
    stroke-miterlimit:1;
 }
 
-/* continent color */
-.eu
+.title
 {
-   fill: #ffddcc;
-   stroke: #ffffff;
-   stroke-width:0.5;
-   /fill-rule:evenodd;  
+   color: #00d18a;
+   top:230px;
+   font-family: "Monospace", Lucida Console;
+   text-indent: 230px;
+   font-size: 110%;
 }
 
-/* country colors */
-#cz /*chech republic*/
+.subtitle
 {
-   fill: #cc4400;
-   stroke: #cc4400;
-   stroke-width:0.5;
-   fill-rule:evenodd;   
-}
+   color: #000000;
+   top:300px;
+   font-family: "Monospace", Lucida Console;
+   text-indent: 300px;
+   font-size: 70%;
 
-#path6484 /*netherlands*/
-{
-   fill: #ff573d;
-   stroke:#ff573d;
-   stroke-width:0.5;
-   fill-rule:evenodd;  
-}
-#path2906 /*italy*/
-{
-   fill: #ff9966;
-   stroke:#ff9966;
-   stroke-width:0.5;
-   fill-rule:evenodd;   
-}
-
-#be /*belgium*/
-{
-   fill: #4d1900;
-   stroke:#4d1900;
-   stroke-width:0.5;
-   fill-rule:evenodd;  
-}

@@ -9,5 +9,8 @@ window.onload = function() {
 /* changeColor takes a path ID and a color (hex value)
    and changes that path's fill color */
 function changeColor(id, color) {
-     document.getElementById(id).style.fill = color;
+	var colors = ['red', 'blue', 'green']
+	var
+     document.getElementById(id)#.style.fill = color;
+
 }
