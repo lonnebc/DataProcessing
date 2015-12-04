@@ -1,0 +1,26 @@
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+.axis text {
+    font-family: AppleGothic;
+    font-size: 12px;
+}
+.overlay {
+    fill: none;
+    stroke: none;
+    pointer-events: all;
+}
+
+.focusLine {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 0.5px;
+    .style("opacity", 1)  
+}
+
+.focusCircle {
+    fill: red;
+}
