@@ -75,6 +75,10 @@ vis.append("svg:path")
 	.attr('stroke-width', 1)
 	.attr('fill', 'none');
 
+// functions to retrieve data from mouse location
+	var bisectDate = d3.bisector(function(d) {return d[0];}).left;
+	var bisectTemp = d3.bisector(function(d) {return d[1];}).left;
+
 // draw crosshair x
 var crossX = vis.append("line")
 	.style("stroke", "black")
@@ -98,14 +102,21 @@ vis.on('mousemove', function(data){
 	mouse = d3.mouse(this);
 	console.log(mouse)
 
+
+
+
 // move y-line to mouse position
-crossY.style('opacity', 1)
-	.attr('x1', mouse[0])
-	.attr('x2', mouse[0])
-//
-crossX.style('opacity', 1)
-	.attr('y1', mouse[1])
-	.attr('y2', mouse[1])
+// crossY.style('opacity', 1)
+// 	.attr('x1', mouse[0])
+// 	.attr('x2', mouse[0])
+
+// crossX.style('opacity', 1)
+// 	.attr('y1', mouse[1])
+// 	.attr('y2', mouse[1])
+
+// svg.on("mouseout", function(d) {
+//     xcross.style("visibility", "visible")
+//     ycross.style("visibility","visible")
 
 });
 });
