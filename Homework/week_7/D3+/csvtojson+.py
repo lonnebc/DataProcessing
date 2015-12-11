@@ -8,7 +8,9 @@ data = []
 for line in lines:
     splitted = line.split(',')
     countrycode = splitted[-9]
-    years8 = splitted[-1:-8].strip()
-    data.append([countrycode,years8]) 
+    years = splitted[-8:-1]
+    data.append([countrycode,years]) 
 json_data = json.dumps(data)
 print json_data   
+
+

@@ -1,59 +1,68 @@
+// get data from json-file 
 d3.json("world_income.json", function(error, world_income) {
 	if (error) return console.error(error);
-	console.log(world_income)
+	
+	// make dictionary to add colors 
+	var dictionary = {}
 
-var dictionary = {}
+	// make lists of id's countrycodes and income, calles values
+	ids = []
+	values = []
+	for (i = 0; i < world_income.length; i++){
+		id =  world_income[i][0]
+		value = Math.round(world_income[i][1])
+		ids.push(id)
+		values.push(value)
+	}
 
-// transform values stored as strings to floats, value is 3 letter code country
-for (i = 0; i < world_income.length; i++){
-    id =  world_income[i][0]
-    values = world_income[i][1]
-    console.log(id,values)
+	for (i = 0; i < world_income.length; i++){
+		if (values[i] < 500){
+			//console.log(ids[i])
+			dictionary[ids[i]] = {fillKey : '< 500 $'};
+		}
+		else if (values[i] >= 500 && values[i] < 1000){
+			dictionary[ids[i]] = {fillKey : '500 - 1.000 $'};
+		}
+		else if (values[i] >= 1000 && values[i] < 5000){
+			dictionary[ids[i]] = {fillKey : '1.000 - 5.000 $'};
+		}
+		else if (values[i] >= 5000 && values[i] < 10000){
+			dictionary[ids[i]] = {fillKey : '5.000 - 10.000 $'};
+		}
+		else if (values[i] >= 10000 && values[i] < 25000){
+			dictionary[ids[i]] = {fillKey : '10.000 - 25.000 $'};
+		}
+		else if (values[i] >= 25000 && values[i] < 50000){
+			dictionary[ids[i]] = {fillKey : '25.000 - 50.000 $'};
+		}
+		else if (values[i] > 50000){
+			dictionary[ids[i]] = {fillKey : '> 50.000 $'};
+		}		
+	}
 
-    if (values[i] < 500){
-        dictionary[id] = {fillKey : 'class1'};
-    }
-    else if (values >= 500 && values < 1000){
-        dictionary[id] = {fillKey : 'class2'};
-    }
-    else if (values >= 1000 && values < 5000){
-        dictionary[id] = {fillKey : 'class3'};
-    }
-    else if (values >= 5000 && values < 10000){
-        dictionary[id] = {fillKey : 'class4'};
-    }
-    else if (values >= 10000 && values < 25000){
-        dictionary[id] = {fillKey : 'class5'};
-    }
-    else if (values >= 25000 && values < 50000){
-        dictionary[id] = {fillKey : 'class6'};
-   	}
-};
+	var map = new Datamap({
+		element: document.getElementById("container"),
 
-   	var map = new Datamap({element: document.getElementById('container'),
+		// colors by colorbrewer2.org in nice hue's
+		fills: {
+			'< 500 $': '#efedf5',
+			'500 - 1.000 $': '#dadaeb',
+			'1.000 - 5.000 $': '#bcbddc',
+			'5.000 - 10.000 $': '#9e9ac8',
+			'10.000 - 25.000 $': '#807dba',
+			'25.000 - 50.000 $': '#6a51a3',
+			'> 50.000 $': '#4a1486',
+			defaultFill: 'grey'
+		},
 
-    fills: {
-        'class1': '#fff5f0',
-        'class2': '#fee0d2',
-        'class3': '#fcbba1',
-        'class4': '#fc9272',
-        'class5': '#fb6a4a',
-        'class6': '#ef3b2c',
-      	defaultFill: 'white'
-    },
+		// add associative array 
+		data : dictionary
 
-    // add associative array a
-    world_income : dictionary
+		});
+
+		map.legend() 
+
 });
-
-
-
-// fill in color countries
-// dictionary is an associative array  
-
-    // colorscale countries
-
-
 
 
 

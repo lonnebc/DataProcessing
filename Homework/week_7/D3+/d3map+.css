@@ -1,0 +1,12 @@
+.chart rect {
+	fill: #33CC66;
+}
+.chart text {
+	fill: white;
+	font: 12px Courier;
+	text-anchor: end;
+}
+.datamaps-legend {
+	fill: white;
+	font: 12px Courier;
+}
